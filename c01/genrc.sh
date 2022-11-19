@@ -22,7 +22,8 @@ fi
 
 # get disk image
 shell_folder=$(cd "$(dirname $0)" || exit; pwd)
-bin_file=$(grep -r . * | grep -e 'Binary' | grep -v ':' | awk '{print $3}')
+cd $shell_folder
+bin_file=$(grep -d skip . * | grep -e 'Binary' | grep -v ':' | awk '{print $3}')
 bin_info=($(bximage -func=info $bin_file -q | awk '/geometry/{print $3}' | awk -F '/' '{print $1,$2,$3}'))
 echo "Binary file detected: $bin_file, C/H/S: ${bin_info[0]}/${bin_info[1]}/${bin_info[2]}"
 
