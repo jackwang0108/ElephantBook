@@ -19,6 +19,10 @@ echo "You can run genrc.sh to auto-config bochsrc"
 
 echo "Compiling..."
 mkdir -p $shell_folder/exe
-nasm $shell_folder/a/boot/mbr.S -f bin -o $shell_folder/exe/mbr.bin
+# mbr
+nasm $shell_folder/b/boot/mbr.S -f bin -o $shell_folder/exe/mbr.bin -i $shell_folder/b/boot
 dd if=$shell_folder/exe/mbr.bin of=$bin_file bs=512 count=1 conv=notrunc
+# loader
+nasm $shell_folder/b/boot/loader.S -f bin -o $shell_folder/exe/loader.bin -i $shell_folder/b/boot
+dd if=$shell_folder/exe/loader.bin of=$bin_file bs=512 count=1 seek=2 conv=notrunc
 echo "Done, run genrc.sh to auto-config"
